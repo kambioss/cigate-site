@@ -1,4 +1,5 @@
 import Reveal, { Parallax } from './Motion'
+import { useI18n } from '../i18n/I18nProvider'
 
 /**
  * Ligne alternée image / texte.
@@ -6,6 +7,7 @@ import Reveal, { Parallax } from './Motion'
  * L'image a en plus une légère parallaxe verticale au scroll.
  */
 export default function FeatureRow({ item, flip = false }) {
+  const { tf } = useI18n()
   return (
     <article className={`feature ${flip ? 'feature--flip' : ''}`}>
       <Reveal variant={flip ? 'right' : 'left'} distance={78} className="feature__media">
@@ -16,12 +18,12 @@ export default function FeatureRow({ item, flip = false }) {
       </Reveal>
 
       <Reveal variant={flip ? 'left' : 'right'} distance={78} delay={0.14} className="feature__body">
-        <h3 className="display t-lg">{item.title}</h3>
-        <p className="body-text">{item.intro}</p>
+        <h3 className="display t-lg">{tf(item.title)}</h3>
+        <p className="body-text">{tf(item.intro)}</p>
         <ul className="feature__list">
-          {item.points.map((p) => <li key={p}>{p}</li>)}
+          {tf(item.points).map((p) => <li key={p}>{p}</li>)}
         </ul>
-        <span className="feature__tag">{item.tag}</span>
+        <span className="feature__tag">{tf(item.tag)}</span>
       </Reveal>
     </article>
   )

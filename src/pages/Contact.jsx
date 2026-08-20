@@ -3,8 +3,10 @@ import PageShell from '../components/PageShell'
 import PageHead from '../components/PageHead'
 import Reveal from '../components/Motion'
 import { CONTACT, DOMAINES } from '../data/content'
+import { useI18n } from '../i18n/I18nProvider'
 
 export default function Contact() {
+  const { t, tf } = useI18n()
   const [sent, setSent] = useState(false)
   const [f, setF] = useState({ nom: '', email: '', tel: '', organisation: '', domaine: '', message: '' })
   const set = (k) => (e) => setF((s) => ({ ...s, [k]: e.target.value }))
@@ -13,17 +15,18 @@ export default function Contact() {
     e.preventDefault()
     // Ouvre la messagerie du visiteur avec la demande pré-remplie.
     // Pour un envoi serveur, branchez ici un Cloudflare Worker ou un service de formulaire.
+    const mf = t('contact.mailFields')
     const body = [
-      `Nom : ${f.nom}`,
-      `Organisation : ${f.organisation}`,
-      `Courriel : ${f.email}`,
-      `Téléphone : ${f.tel}`,
-      `Domaine : ${f.domaine}`,
+      `${mf.nom} : ${f.nom}`,
+      `${mf.org} : ${f.organisation}`,
+      `${mf.mail} : ${f.email}`,
+      `${mf.tel} : ${f.tel}`,
+      `${mf.domaine} : ${f.domaine}`,
       '',
       f.message,
     ].join('\n')
     window.location.href =
-      `mailto:${CONTACT.email}?subject=${encodeURIComponent('Demande via le site — ' + (f.domaine || 'Projet'))}` +
+      `mailto:${CONTACT.email}?subject=${encodeURIComponent(`${t('contact.mailSubject')} ${f.domaine || mf.domaine}`)}` +
       `&body=${encodeURIComponent(body)}`
     setSent(true)
   }
@@ -31,9 +34,9 @@ export default function Contact() {
   return (
     <PageShell>
       <PageHead
-        tag="Contact"
-        title="Parlons de votre projet."
-        lede="Pour une mission, une étude, une fourniture d'équipement ou un partenariat, décrivez-nous brièvement votre contexte, la localisation concernée et vos délais."
+        tag={t('contact.head.tag')}
+        title={t('contact.head.title')}
+        lede={t('contact.head.lede')}
       />
 
       <section className="band">
@@ -41,54 +44,52 @@ export default function Contact() {
           <Reveal variant="left" distance={70}>
             {sent ? (
               <div className="form__ok">
-                Votre demande a été préparée dans votre messagerie. Si rien ne s'est ouvert
-                automatiquement, écrivez-nous directement à <strong>{CONTACT.email}</strong> ou
-                appelez le {CONTACT.phone}.
+                {t('contact.successPrefix')} <strong>{CONTACT.email}</strong> {t('contact.successOr')} {CONTACT.phone}.
               </div>
             ) : (
               <form className="form" onSubmit={submit}>
                 <div className="form__row">
                   <div className="field">
-                    <label htmlFor="nom">Nom et prénom</label>
-                    <input id="nom" required value={f.nom} onChange={set('nom')} placeholder="Votre nom complet" />
+                    <label htmlFor="nom">{t('contact.labels.nom')}</label>
+                    <input id="nom" required value={f.nom} onChange={set('nom')} placeholder={t('contact.placeholders.nom')} />
                   </div>
                   <div className="field">
-                    <label htmlFor="org">Organisation</label>
-                    <input id="org" value={f.organisation} onChange={set('organisation')} placeholder="Votre structure" />
+                    <label htmlFor="org">{t('contact.labels.org')}</label>
+                    <input id="org" value={f.organisation} onChange={set('organisation')} placeholder={t('contact.placeholders.org')} />
                   </div>
                 </div>
 
                 <div className="form__row">
                   <div className="field">
-                    <label htmlFor="email">Adresse électronique</label>
-                    <input id="email" type="email" required value={f.email} onChange={set('email')} placeholder="vous@organisation.tg" />
+                    <label htmlFor="email">{t('contact.labels.email')}</label>
+                    <input id="email" type="email" required value={f.email} onChange={set('email')} placeholder={t('contact.placeholders.email')} />
                   </div>
                   <div className="field">
-                    <label htmlFor="tel">Téléphone</label>
-                    <input id="tel" type="tel" value={f.tel} onChange={set('tel')} placeholder="+228 ..." />
+                    <label htmlFor="tel">{t('contact.labels.tel')}</label>
+                    <input id="tel" type="tel" value={f.tel} onChange={set('tel')} placeholder={t('contact.placeholders.tel')} />
                   </div>
                 </div>
 
                 <div className="field">
-                  <label htmlFor="dom">Domaine concerné</label>
+                  <label htmlFor="dom">{t('contact.labels.domaine')}</label>
                   <select id="dom" value={f.domaine} onChange={set('domaine')}>
-                    <option value="">Sélectionnez un domaine</option>
-                    {DOMAINES.map((d) => <option key={d.slug}>{d.short}</option>)}
-                    <option>Partenariat ou autre demande</option>
+                    <option value="">{t('contact.domaineDefault')}</option>
+                    {DOMAINES.map((d) => <option key={d.slug}>{tf(d.short)}</option>)}
+                    <option>{t('contact.domaineOther')}</option>
                   </select>
                 </div>
 
                 <div className="field">
-                  <label htmlFor="msg">Votre besoin</label>
+                  <label htmlFor="msg">{t('contact.labels.message')}</label>
                   <textarea id="msg" required rows={5} value={f.message} onChange={set('message')}
-                    placeholder="Localisation, surface concernée, échéances, livrables attendus…" />
+                    placeholder={t('contact.placeholders.message')} />
                 </div>
 
                 <div className="form__submit">
                   <button type="submit" className="btn btn--green">
-                    Envoyer la demande <span className="btn__arrow">→</span>
+                    {t('contact.submit')} <span className="btn__arrow">→</span>
                   </button>
-                  <span className="form__note">Réponse rapide, sous 48 h ouvrées</span>
+                  <span className="form__note">{t('contact.note')}</span>
                 </div>
               </form>
             )}
@@ -96,13 +97,13 @@ export default function Contact() {
 
           <Reveal variant="right" distance={70} delay={0.14}>
             <div className="infocard">
-              <span className="tag" style={{ marginBottom: 18 }}>Nous joindre</span>
+              <span className="tag" style={{ marginBottom: 18 }}>{t('contact.infoTag')}</span>
               <dl>
-                <div className="inforow"><dt>Raison sociale</dt><dd>{CONTACT.raison}</dd></div>
-                <div className="inforow"><dt>Siège social</dt><dd>{CONTACT.address}</dd></div>
-                <div className="inforow"><dt>Téléphone</dt><dd><a href={`tel:${CONTACT.phoneHref}`}>{CONTACT.phone}</a></dd></div>
-                <div className="inforow"><dt>Courriel</dt><dd><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></dd></div>
-                <div className="inforow"><dt>Horaires</dt><dd>{CONTACT.hours}</dd></div>
+                <div className="inforow"><dt>{t('contact.infoLabels.raison')}</dt><dd>{CONTACT.raison}</dd></div>
+                <div className="inforow"><dt>{t('contact.infoLabels.siege')}</dt><dd>{CONTACT.address}</dd></div>
+                <div className="inforow"><dt>{t('contact.infoLabels.tel')}</dt><dd><a href={`tel:${CONTACT.phoneHref}`}>{CONTACT.phone}</a></dd></div>
+                <div className="inforow"><dt>{t('contact.infoLabels.mail')}</dt><dd><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></dd></div>
+                <div className="inforow"><dt>{t('contact.infoLabels.horaires')}</dt><dd>{tf(CONTACT.hours)}</dd></div>
               </dl>
               <div className="locus" aria-hidden="true">
                 <span className="locus__ring" />
