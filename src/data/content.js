@@ -36,13 +36,13 @@ export const IMG = {
   satMap:     u('1578309756213-4ae60733ad6f'),
   satOrbit:   u('1460186136353-977e9d6085a1'),
   satSensor:  u('1708738793054-32b71e3fc822'),
-  satTexture: u('1574786199452-c7a5f69fb6e9'),
+  satTexture: u('1717824183048-1cf231aab964'),
   satIslands: u('1462331321792-cc44368b8894'),
 
   // Territoire vu du ciel
   aerialRoads: u('1441644599508-24ae08965c5c'),
   aerialCoast: u('1523443571261-671bddef4ecd'),
-  aerialField: u('1576767810583-046a1f7da256'),
+  aerialField: u('1720156457517-c5ae8b9915f0'),
 
   // Terrain et instruments
   station:   u('1654643353084-10e62e05b9bf'),

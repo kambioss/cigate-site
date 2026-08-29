@@ -12,6 +12,7 @@ export default {
   home: {
     hero: {
       badge: 'Firm based in Lomé · Togo',
+      tagline: 'CIGATE, the gateway to technological innovation',
       titleLine1: 'Read the land,',
       titleGreen: 'measure',
       titleLine2: " what's real,",

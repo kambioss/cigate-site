@@ -234,6 +234,12 @@ ul { list-style: none; }
 .hero__badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: block; animation: blip 2.4s ease-in-out infinite; }
 @keyframes blip { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.7); } }
 
+.hero__tagline {
+  display: block; font-size: 15px; font-weight: 600; color: var(--navy);
+  margin-bottom: 14px;
+}
+.hero__tagline strong { color: var(--green-2); }
+
 .hero__sub { margin-top: 22px; max-width: 50ch; }
 .hero__actions { display: flex; gap: 13px; margin-top: 34px; flex-wrap: wrap; }
 .hero__meta { display: flex; gap: 26px; margin-top: 38px; padding-top: 24px; border-top: 1px solid var(--line); flex-wrap: wrap; }

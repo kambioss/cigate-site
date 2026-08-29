@@ -12,6 +12,7 @@ export default {
   home: {
     hero: {
       badge: 'Cabinet basé à Lomé · Togo',
+      tagline: "CIGATE, la porte de l'innovation technologique",
       titleLine1: 'Lire le territoire,',
       titleGreen: 'mesurer',
       titleLine2: ' le réel,',

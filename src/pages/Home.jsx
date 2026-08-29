@@ -51,6 +51,10 @@ function Hero() {
             <i /> {t('home.hero.badge')}
           </motion.span>
 
+          <motion.span className="hero__tagline" {...rise(0.16)}>
+            {t('home.hero.tagline')}
+          </motion.span>
+
           <motion.h1 className="display t-hero" {...rise(0.2)}>
             {t('home.hero.titleLine1')}<br />
             <span className="green">{t('home.hero.titleGreen')}</span>{t('home.hero.titleLine2')}<br />
