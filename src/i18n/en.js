@@ -11,7 +11,7 @@ export default {
 
   home: {
     seo: {
-      title: 'CIGATE — Geomatics, Planning, Topography and Environment | Lomé, Togo',
+      title: 'CIGATE · Geomatics, Planning, Topography and Environment | Lomé, Togo',
       description: 'CIGATE, International Cabinet of Geomatics, Planning, Topography and Environment. Geomatics, remote sensing, topography, land studies, data analysis and digital solutions. Based in Lomé, Togo.',
     },
     hero: {
@@ -19,9 +19,9 @@ export default {
       tagline: 'CIGATE, the gateway to technological innovation',
       titleLine1: 'Read the land,',
       titleGreen: 'measure',
-      titleLine2: " what's real,",
-      titleLine3: 'inform the decision.',
-      lede: 'CIGATE — International Cabinet of Geomatics, Planning, Topography and Environment. We produce geospatial data, process it and turn it into decision-support tools for public administrations, local authorities and businesses.',
+      titleLine2: ' reality,',
+      titleLine3: 'inform decisions.',
+      lede: 'International Cabinet of Geomatics, Planning, Topography and Environment. We produce geospatial data, process it and turn it into decision-support tools for public administrations, local authorities and businesses.',
       ctaPrimary: 'Discuss your project',
       ctaSecondary: 'Our fields of work',
       metaSeatLabel: 'Head office',
@@ -30,7 +30,7 @@ export default {
       metaScopeValue: 'Togo & international',
       imgAltMain: 'Team of engineers analysing geospatial data',
       imgAltSat: 'False-colour satellite image',
-      coordsLabel: 'Position — Lomé',
+      coordsLabel: 'Position · Lomé',
     },
     intro: {
       tag: 'About us',
@@ -79,7 +79,7 @@ export default {
     head: {
       tag: 'About us',
       title: 'A territorial engineering firm born in Lomé.',
-      lede: 'CIGATE — International Cabinet of Geomatics, Planning, Topography and Environment — is a private limited company under Togolese law, incorporated under the OHADA framework and operating both in Togo and internationally.',
+      lede: 'CIGATE (International Cabinet of Geomatics, Planning, Topography and Environment) is a private limited company under Togolese law, incorporated under the OHADA framework and operating both in Togo and internationally.',
     },
     intro: {
       title: 'A multidisciplinary team, a single standard.',

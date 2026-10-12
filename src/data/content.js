@@ -1,7 +1,7 @@
 // ============================================================
-//  CIGATE — contenu éditorial centralisé
+//  CIGATE : contenu éditorial centralisé
 //  Cabinet International de Géomatique, Aménagement,
-//  Topographie et Environnement — SARL, Lomé (Togo)
+//  Topographie et Environnement, SARL, Lomé (Togo)
 //  Domaines issus de l'article 2 des statuts.
 //
 //  Les champs traduisibles sont des objets { fr, en } ; utiliser
@@ -554,7 +554,7 @@ export const CATEGORY_LABELS = Object.fromEntries(NEWS_CATEGORIES.map((c) => [c.
 // ---- Repères vérifiables (issus des statuts) ----
 export const REPERES = [
   { k: 'Forme juridique',  v: 'SARL pluripersonnelle' },
-  { k: 'Cadre',            v: 'Droit OHADA — Togo' },
+  { k: 'Cadre',            v: 'Droit OHADA, Togo' },
   { k: 'Siège social',     v: 'Lomé, Quartier Adidoadin' },
   { k: 'Champ d’action', v: 'Togo et international' },
 ];

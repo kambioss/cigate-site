@@ -1,6 +1,6 @@
-# CIGATE — site vitrine
+# CIGATE : site vitrine
 
-**Cabinet International de Géomatique, Aménagement, Topographie et Environnement** — SARL, Lomé (Togo).
+**Cabinet International de Géomatique, Aménagement, Topographie et Environnement**, SARL, Lomé (Togo).
 Projet **React 18 + Vite + Framer Motion + React Router**, servi par un **Cloudflare Worker**
 (Hono) avec assets statiques, base **D1** pour les actualités et **KV** pour les médias.
 Site bilingue **FR / EN** (`/…` et `/en/…`) et panel d'administration sur `/admin`.
@@ -9,15 +9,15 @@ Site bilingue **FR / EN** (`/…` et `/en/…`) et panel d'administration sur `/
 
 ```bash
 npm install
-npm run dev              # http://localhost:5173 — front seul (sans API/D1/KV)
-npx wrangler dev         # http://localhost:8787 — front + API + D1/KV émulés en local
+npm run dev              # http://localhost:5173 : front seul (sans API/D1/KV)
+npx wrangler dev         # http://localhost:8787 : front + API + D1/KV émulés en local
 ```
 
 `npx wrangler dev` construit le client et le Worker puis sert les deux ensemble : c'est la
 commande à utiliser pour tester l'admin, les actus dynamiques ou l'upload d'images.
 
 Les secrets locaux (`ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`) vont dans `.dev.vars`
-(gitignored — copier `.dev.vars.example` pour démarrer).
+(ignoré par git, copier `.dev.vars.example` pour démarrer).
 
 ### Base de données locale
 
@@ -28,7 +28,7 @@ npx wrangler d1 execute cigate --local --file=migrations/0001_news.sql
 ## Déployer sur Cloudflare Workers
 
 Le projet est déjà configuré côté Cloudflare (Worker `cigate-site`, base D1 `cigate`,
-namespace KV `cigate_media`) — `wrangler.jsonc` porte les bindings. Reste, une fois
+namespace KV `cigate_media`) ; `wrangler.jsonc` porte les bindings. Reste, une fois
 authentifié (`npx wrangler login`) :
 
 ```bash
@@ -41,7 +41,7 @@ npx wrangler secret put ADMIN_SESSION_SECRET   # ex. valeur : openssl rand -hex 
 
 # 3. Secrets SMTP du formulaire de contact (une seule fois)
 npx wrangler secret put SMTP_HOST              # Infomaniak : mail.infomaniak.com
-npx wrangler secret put SMTP_PORT              # 465 (SSL) ou 587 (STARTTLS) — le 25 est bloqué
+npx wrangler secret put SMTP_PORT              # 465 (SSL) ou 587 (STARTTLS), le 25 est bloqué
 npx wrangler secret put SMTP_USER
 npx wrangler secret put SMTP_PASS
 
@@ -88,9 +88,9 @@ Gestion (créer/éditer/publier/dépublier/supprimer + images) via le panel `/ad
 
 ## Panel d'administration (`/admin`)
 
-Protégé par mot de passe unique (`ADMIN_PASSWORD`, secret Worker) — pas de multi-compte.
-- `/admin/news` — liste, création, édition (champs FR **et** EN), publication.
-- `/admin/media` — médiathèque : upload d'images (stockées en KV, `cigate_media`),
+Protégé par mot de passe unique (`ADMIN_PASSWORD`, secret Worker), pas de multi-compte.
+- `/admin/news` : liste, création, édition (champs FR **et** EN), publication.
+- `/admin/media` : médiathèque : upload d'images (stockées en KV, `cigate_media`),
   copie d'URL, suppression. Chaque image uploadée dans le formulaire d'actu passe par là.
 
 Le panel lui-même reste en français (outil interne) ; seul le site public est bilingue.
@@ -102,7 +102,7 @@ Le panel lui-même reste en français (outil interne) ; seul le site public est 
 - Les données structurées de `src/data/content.js` (domaines, méthode, engagements,
   clients, catégories d'actus) ont des champs `{ fr, en }`, résolus via `tf(champ)`.
 - Les deux sont fournis par `I18nProvider` (`src/i18n/I18nProvider.jsx`), qui déduit la
-  langue depuis l'URL (`/en/...` vs le reste) — pas de préférence stockée.
+  langue depuis l'URL (`/en/...` vs le reste), pas de préférence stockée.
 - Pour ajouter une langue : dupliquer `en.js`, ajouter les variantes `{ fr, en, <code> }`
   dans `content.js`, et un préfixe de route dans `ROUTES` (`src/App.jsx`).
 
@@ -145,7 +145,7 @@ séquencée. `prefers-reduced-motion` neutralise l'ensemble.
 
 Tout est dans **`src/data/content.js`** : navigation, huit domaines d'activité (repris de
 l'article 2 des statuts), méthode, engagements, clients cibles, repères juridiques et
-coordonnées — chaque texte est un objet `{ fr, en }`.
+coordonnées. Chaque texte est un objet `{ fr, en }`.
 
 ### Adresse électronique
 

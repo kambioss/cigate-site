@@ -11,7 +11,7 @@ export default {
 
   home: {
     seo: {
-      title: 'CIGATE — Géomatique, Aménagement, Topographie et Environnement | Lomé, Togo',
+      title: 'CIGATE · Géomatique, Aménagement, Topographie et Environnement | Lomé, Togo',
       description: "CIGATE, Cabinet International de Géomatique, Aménagement, Topographie et Environnement. Géomatique, télédétection, topographie, études foncières, analyse de données et solutions numériques. Basé à Lomé, Togo.",
     },
     hero: {
@@ -30,7 +30,7 @@ export default {
       metaScopeValue: 'Togo & international',
       imgAltMain: "Équipe d'ingénieurs analysant des données géospatiales",
       imgAltSat: 'Image satellite en fausses couleurs',
-      coordsLabel: 'Position — Lomé',
+      coordsLabel: 'Position · Lomé',
     },
     intro: {
       tag: 'Qui sommes-nous',
@@ -79,7 +79,7 @@ export default {
     head: {
       tag: 'Qui sommes-nous',
       title: "Un cabinet d'ingénierie territoriale né à Lomé.",
-      lede: "CIGATE — Cabinet International de Géomatique, Aménagement, Topographie et Environnement — est une société à responsabilité limitée de droit togolais, constituée sous le régime OHADA et intervenant au Togo comme à l'international.",
+      lede: "CIGATE (Cabinet International de Géomatique, Aménagement, Topographie et Environnement) est une société à responsabilité limitée de droit togolais, constituée sous le régime OHADA et intervenant au Togo comme à l'international.",
     },
     intro: {
       title: 'Une équipe pluridisciplinaire, un seul standard.',

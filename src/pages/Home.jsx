@@ -10,7 +10,7 @@ import { Icons } from '../components/Icons'
 import { CLIENTS, CONTACT, DOMAINES, ENGAGEMENTS, IMG, METHODE } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
 
-/* Relevé de coordonnées — Lomé */
+/* Relevé de coordonnées, Lomé */
 function Coords({ label }) {
   const [c, setC] = useState({ lat: 6.1319, lon: 1.2228 })
   useEffect(() => {
@@ -63,7 +63,7 @@ function Hero() {
           </motion.h1>
 
           <motion.p className="lede hero__sub" {...rise(0.34)}>
-            <strong style={{ color: 'var(--navy)' }}>CIGATE</strong> — {t('home.hero.lede')}
+            <strong style={{ color: 'var(--navy)' }}>CIGATE</strong>, {t('home.hero.lede')}
           </motion.p>
 
           <motion.div className="hero__actions" {...rise(0.46)}>

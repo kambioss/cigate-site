@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
 
         <div className="ftr__bottom">
-          <span>© {new Date().getFullYear()} {CONTACT.raison} — {t('footer.rights')}</span>
+          <span>© {new Date().getFullYear()} {CONTACT.raison} · {t('footer.rights')}</span>
           <span>Lomé · {CONTACT.coord}</span>
         </div>
       </div>

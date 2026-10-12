@@ -25,7 +25,7 @@ export default function AdminShell() {
   return (
     <div className="admin">
       <header className="admin__bar">
-        <span className="admin__brand">CIGATE — Administration</span>
+        <span className="admin__brand">CIGATE · Administration</span>
         <nav className="admin__nav">
           <NavLink to="/admin/news" className={({ isActive }) => (isActive ? 'is-active' : '')}>
             Actualités

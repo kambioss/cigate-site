@@ -43,10 +43,10 @@ contactRoutes.post('/', async (c) => {
   const to = env.CONTACT_TO || 'contact@cigate-int.com'
   const text = [
     `Nom : ${f.nom}`,
-    `Organisation : ${f.organisation || '—'}`,
+    `Organisation : ${f.organisation || 'non renseigné'}`,
     `Courriel : ${f.email}`,
-    `Téléphone : ${f.tel || '—'}`,
-    `Domaine : ${f.domaine || '—'}`,
+    `Téléphone : ${f.tel || 'non renseigné'}`,
+    `Domaine : ${f.domaine || 'non renseigné'}`,
     '',
     f.message,
   ].join('\n')
@@ -64,7 +64,7 @@ contactRoutes.post('/', async (c) => {
         from: { name: 'Site CIGATE', email: env.SMTP_FROM || env.SMTP_USER },
         to,
         reply: { name: f.nom, email: f.email },
-        subject: `Demande via le site — ${f.domaine || 'Contact'}`,
+        subject: `Demande via le site : ${f.domaine || 'Contact'}`,
         text,
       },
     )

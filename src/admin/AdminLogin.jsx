@@ -27,7 +27,7 @@ export default function AdminLogin() {
   return (
     <div className="admin admin--center">
       <form className="form admin-login" onSubmit={submit}>
-        <h1 className="display t-md" style={{ marginBottom: 4 }}>CIGATE — Administration</h1>
+        <h1 className="display t-md" style={{ marginBottom: 4 }}>CIGATE · Administration</h1>
         <p className="admin-login__note">Accès réservé à l'équipe CIGATE.</p>
         <div className="field">
           <label htmlFor="password">Mot de passe</label>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-// Placeholder — à remplacer par le domaine définitif une fois le site déployé
+// Placeholder : à remplacer par le domaine définitif une fois le site déployé
 // (voir CONTACT.email dans data/content.js, également un placeholder : cigate.tg).
 const SITE_URL = 'https://cigate.tg'
 
@@ -28,7 +28,7 @@ function setLink(rel, href, hreflang) {
   tag.setAttribute('href', href)
 }
 
-/** Titre, description et balises canonical/hreflang par page — pour un référencement correct de chaque route. */
+/** Titre, description et balises canonical/hreflang par page, pour un référencement correct de chaque route. */
 export default function SEO({ title, description, pathFr, pathEn, suffix = true }) {
   const location = useLocation()
 

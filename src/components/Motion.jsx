@@ -5,7 +5,7 @@ const EASE = [0.16, 0.84, 0.24, 1]
 const VIEW = { once: true, amount: 0.2, margin: '0px 0px -70px 0px' }
 
 /* ============================================================
-   Reveal — huit variantes de mouvement.
+   Reveal, huit variantes de mouvement.
    variant :
      'left'   glisse depuis la gauche
      'right'  glisse depuis la droite
