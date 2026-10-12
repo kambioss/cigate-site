@@ -43,18 +43,27 @@ export const IMG = {
   aerialRoads: u('1441644599508-24ae08965c5c'),
   aerialCoast: u('1523443571261-671bddef4ecd'),
   aerialField: u('1720156457517-c5ae8b9915f0'),
+  aerialCity:  u('1614103192137-835c33cd0685'),
 
   // Terrain et instruments
   station:   u('1654643353084-10e62e05b9bf'),
   tripod:    u('1628158088936-68ccaaa400dc'),
   gnss:      u('1628155858736-bacadae33a88'),
   level:     u('1545186070-de624ed19875'),
+
+  // Formations
+  trainQgis:     u('1666281466387-0639381c5680'),
+  trainArcgis:   u('1542744173-8e7e53415bb0'),
+  trainPython:   u('1660616246653-e2c57d1077b9'),
+  trainAdvanced: u('1662638600476-d563fffbb072'),
+  trainWebgis:   u('1676652822930-f82ccf06b7ef'),
 };
 
 export const NAV = [
   { to: '/',                  label: { fr: 'Accueil', en: 'Home' } },
   { to: '/qui-sommes-nous',   label: { fr: 'Qui sommes-nous', en: 'About us' } },
   { to: '/notre-expertise',   label: { fr: 'Notre expertise', en: 'Our expertise' } },
+  { to: '/formations',        label: { fr: 'Formations', en: 'Training' } },
   { to: '/actualites',        label: { fr: 'Actualités', en: 'News' } },
   { to: '/contact',           label: { fr: 'Contact', en: 'Contact' } },
 ];
@@ -79,7 +88,7 @@ export const DOMAINES = [
   {
     slug: 'geomatique',
     index: '01',
-    image: IMG.satLandsat,
+    image: IMG.satSensor,
     short: { fr: 'Géomatique & intelligence territoriale', en: 'Geomatics & territorial intelligence' },
     title: {
       fr: 'Géomatique, environnement, aménagement et intelligence territoriale',
@@ -267,7 +276,7 @@ export const DOMAINES = [
   {
     slug: 'etudes',
     index: '08',
-    image: IMG.briefing,
+    image: IMG.conseil,
     short: { fr: 'Études & prestations de services', en: 'Studies & services' },
     title: { fr: 'Réalisation d’études et de prestations de services', en: 'Studies and service delivery' },
     tag: { fr: 'Marchés · Appels d’offres · Conventions', en: 'Tenders · Contracts · Agreements' },
@@ -287,6 +296,154 @@ export const DOMAINES = [
         'Businesses, organisations and individuals',
         'National and international partners',
         'Tenders, consultations, calls for proposals and agreements',
+      ],
+    },
+  },
+];
+
+// ---- Catalogue des formations ----
+export const FORMATIONS = [
+  {
+    slug: 'qgis-initiation',
+    index: '01',
+    image: IMG.trainQgis,
+    title: { fr: 'Introduction au SIG avec QGIS', en: 'Introduction to GIS with QGIS' },
+    intro: {
+      fr: "Découvrir les fondamentaux des systèmes d'information géographique avec QGIS, la référence libre et gratuite des SIG.",
+      en: 'Discover the fundamentals of geographic information systems with QGIS, the leading free and open-source GIS software.',
+    },
+    points: {
+      fr: [
+        "Prise en main de l'interface et des projets QGIS",
+        'Import, structuration et symbologie des données géospatiales',
+        'Habillage et mise en page cartographique',
+        'Premières analyses spatiales',
+      ],
+      en: [
+        'Getting started with the QGIS interface and projects',
+        'Importing, structuring and styling geospatial data',
+        'Map layout and cartographic design',
+        'First spatial analyses',
+      ],
+    },
+  },
+  {
+    slug: 'arcgis-initiation',
+    index: '02',
+    image: IMG.trainArcgis,
+    title: { fr: 'Introduction au SIG avec ArcGIS', en: 'Introduction to GIS with ArcGIS' },
+    intro: {
+      fr: 'Maîtriser les bases de la suite ArcGIS (Esri) pour la production, la gestion et l’analyse de données géographiques.',
+      en: 'Master the basics of the ArcGIS (Esri) suite for producing, managing and analysing geographic data.',
+    },
+    points: {
+      fr: [
+        'Environnement ArcGIS Pro et gestion de projets',
+        'Création et gestion de géodatabases',
+        'Symbologie, étiquetage et mise en page',
+        'Analyses spatiales avec les outils Esri',
+      ],
+      en: [
+        'ArcGIS Pro environment and project management',
+        'Creating and managing geodatabases',
+        'Symbology, labelling and layout',
+        'Spatial analysis with Esri tools',
+      ],
+    },
+  },
+  {
+    slug: 'python-geospatial',
+    index: '03',
+    image: IMG.trainPython,
+    title: { fr: 'Python Programming pour le géospatial', en: 'Python Programming for Geospatial' },
+    intro: {
+      fr: 'Automatiser le traitement de données géospatiales et développer des scripts avec Python.',
+      en: 'Automate geospatial data processing and develop scripts with Python.',
+    },
+    points: {
+      fr: [
+        'Bases de Python appliquées à la géomatique',
+        'Manipulation de données vecteur et raster',
+        'Automatisation des traitements SIG',
+        'Introduction à GeoPandas, Rasterio et ArcPy',
+      ],
+      en: [
+        'Python basics applied to geomatics',
+        'Handling vector and raster data',
+        'Automating GIS workflows',
+        'Introduction to GeoPandas, Rasterio and ArcPy',
+      ],
+    },
+  },
+  {
+    slug: 'sig-avance',
+    index: '04',
+    image: IMG.trainAdvanced,
+    title: { fr: 'SIG avancé', en: 'Advanced GIS' },
+    intro: {
+      fr: "Approfondir l'analyse spatiale et la modélisation pour des projets territoriaux exigeants.",
+      en: 'Deepen spatial analysis and modelling skills for demanding territorial projects.',
+    },
+    points: {
+      fr: [
+        'Analyses spatiales avancées et modélisation',
+        'Interopérabilité et bases de données spatiales',
+        'Automatisation des chaînes de traitement',
+        "Étude de cas appliqués à l'aménagement du territoire",
+      ],
+      en: [
+        'Advanced spatial analysis and modelling',
+        'Interoperability and spatial databases',
+        'Automating processing pipelines',
+        'Case studies applied to territorial planning',
+      ],
+    },
+  },
+  {
+    slug: 'collecte-mobile',
+    index: '05',
+    image: IMG.tripod,
+    title: { fr: 'Outils numériques de collecte de données SIG', en: 'Digital tools for GIS data collection' },
+    intro: {
+      fr: 'Se former aux outils de collecte de terrain mobile pour numériser vos enquêtes et relevés géospatiaux.',
+      en: 'Learn mobile field-collection tools to digitise your geospatial surveys and records.',
+    },
+    points: {
+      fr: [
+        'Conception de formulaires de collecte',
+        'Collecte mobile hors-ligne et géolocalisée',
+        'Synchronisation et contrôle qualité des données',
+        'Intégration des données collectées dans un SIG',
+      ],
+      en: [
+        'Designing data collection forms',
+        'Offline, geolocated mobile data collection',
+        'Data synchronisation and quality control',
+        'Integrating collected data into a GIS',
+      ],
+    },
+  },
+  {
+    slug: 'webgis',
+    index: '06',
+    image: IMG.trainWebgis,
+    title: { fr: 'WebGIS', en: 'WebGIS' },
+    intro: {
+      fr: 'Concevoir et publier des cartes interactives et des applications web géospatiales.',
+      en: 'Design and publish interactive maps and web geospatial applications.',
+    },
+    points: {
+      fr: [
+        'Principes du WebGIS et des services web géospatiaux (WMS/WFS)',
+        'Publication de cartes avec QGIS Server / GeoServer',
+        'Développement de cartes interactives (Leaflet, MapLibre)',
+        'Diffusion et partage de données géospatiales en ligne',
+      ],
+      en: [
+        'WebGIS principles and geospatial web services (WMS/WFS)',
+        'Publishing maps with QGIS Server / GeoServer',
+        'Building interactive maps (Leaflet, MapLibre)',
+        'Publishing and sharing geospatial data online',
       ],
     },
   },
@@ -409,7 +566,7 @@ export const CONTACT = {
   address: 'Quartier Adidoadin, Lomé, Togo',
   phone: '+228 22 55 70 03',
   phoneHref: '+22822557003',
-  email: 'contact@cigate.tg',
+  email: 'contact@cigate-int.com',
   hours: { fr: 'Lundi – Vendredi · 8h00 – 17h30', en: 'Monday – Friday · 8:00 AM – 5:30 PM' },
   coord: '6.1319° N · 1.2228° E',
 };

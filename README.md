@@ -39,7 +39,13 @@ npx wrangler d1 execute cigate --remote --file=migrations/0001_news.sql
 npx wrangler secret put ADMIN_PASSWORD
 npx wrangler secret put ADMIN_SESSION_SECRET   # ex. valeur : openssl rand -hex 32
 
-# 3. Build + déploiement
+# 3. Secrets SMTP du formulaire de contact (une seule fois)
+npx wrangler secret put SMTP_HOST              # Infomaniak : mail.infomaniak.com
+npx wrangler secret put SMTP_PORT              # 465 (SSL) ou 587 (STARTTLS) — le 25 est bloqué
+npx wrangler secret put SMTP_USER
+npx wrangler secret put SMTP_PASS
+
+# 4. Build + déploiement
 npm run build
 npx wrangler deploy
 ```
@@ -143,8 +149,19 @@ coordonnées — chaque texte est un objet `{ fr, en }`.
 
 ### Adresse électronique
 
-`contact@cigate.tg` est un **placeholder** — remplacez-le dans `CONTACT.email`
-(`src/data/content.js`) par votre adresse réelle.
+L'adresse de contact (`contact@cigate-int.com`) est définie dans `CONTACT.email`
+(`src/data/content.js`).
+
+### Référencement (SEO)
+
+`SITE_URL` (`src/components/SEO.jsx`) et le domaine utilisé dans `public/sitemap.xml` et
+`public/robots.txt` sont fixés à `https://cigate.tg`, en **placeholder** comme l'adresse
+électronique ci-dessus. Remplacez-les par le nom de domaine définitif avant la mise en ligne,
+sans quoi les balises canonical/hreflang et le sitemap pointeront vers la mauvaise adresse.
+
+Chaque page pose dynamiquement son propre `<title>`, sa méta description et ses balises
+canonical/hreflang via `<SEO>` (rendu depuis `PageHead`, ou directement sur `Home`). Le fichier
+`public/sitemap.xml` liste les routes FR/EN ; pensez à y ajouter toute nouvelle page.
 
 ### Images
 
@@ -158,9 +175,13 @@ photos :
 
 ### Formulaire de contact
 
-Il ouvre par défaut la messagerie du visiteur (`mailto:`). Pour un envoi serveur,
-ajoutez une route dans `worker/routes/` et remplacez le corps de `submit()` dans
-`src/pages/Contact.jsx` par un appel `fetch()` vers cette route.
+Le formulaire envoie la demande à `POST /api/contact` (`worker/routes/contact.js`),
+qui l'expédie par **SMTP** (bibliothèque `worker-mailer`) à `contact@cigate-int.com`.
+Le courriel a pour « Répondre à » l'adresse du visiteur : il suffit de répondre.
+
+Variables : `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, et en option
+`SMTP_FROM` (expéditeur, par défaut `SMTP_USER`) et `CONTACT_TO` (destinataire,
+par défaut `contact@cigate-int.com`). Voir `.dev.vars.example`.
 
 ## À compléter plus tard
 

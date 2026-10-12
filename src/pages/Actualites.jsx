@@ -49,6 +49,7 @@ export default function Actualites() {
         tag={t('news.head.tag')}
         title={t('news.head.title')}
         lede={t('news.head.lede')}
+        pathFr="/actualites" pathEn="/en/actualites"
       />
 
       {featured && (

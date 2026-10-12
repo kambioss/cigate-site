@@ -18,6 +18,7 @@ export default function QuiSommesNous() {
         tag={t('about.head.tag')}
         title={t('about.head.title')}
         lede={t('about.head.lede')}
+        pathFr="/qui-sommes-nous" pathEn="/en/qui-sommes-nous"
       />
 
       {/* Présentation */}
@@ -77,7 +78,7 @@ export default function QuiSommesNous() {
             </div>
             <Reveal variant="wipe" delay={0.15}>
               <div style={{ borderRadius: 6, overflow: 'hidden', aspectRatio: '4/3' }}>
-                <img src={IMG.satDelta} alt={t('about.vision.imgAlt')} loading="lazy"
+                <img src={IMG.aerialCity} alt={t('about.vision.imgAlt')} loading="lazy"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             </Reveal>

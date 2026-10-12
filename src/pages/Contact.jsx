@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PageShell from '../components/PageShell'
 import PageHead from '../components/PageHead'
 import Reveal from '../components/Motion'
@@ -7,28 +8,36 @@ import { useI18n } from '../i18n/I18nProvider'
 
 export default function Contact() {
   const { t, tf } = useI18n()
-  const [sent, setSent] = useState(false)
+  const [searchParams] = useSearchParams()
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [f, setF] = useState({ nom: '', email: '', tel: '', organisation: '', domaine: '', message: '' })
   const set = (k) => (e) => setF((s) => ({ ...s, [k]: e.target.value }))
 
-  const submit = (e) => {
+  useEffect(() => {
+    const formation = searchParams.get('formation')
+    if (!formation) return
+    setF((s) => ({
+      ...s,
+      domaine: `${t('formations.quoteSubject')} ${formation}`,
+      message: t('formations.quoteMessage').replace('{{formation}}', formation),
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
+
+  const submit = async (e) => {
     e.preventDefault()
-    // Ouvre la messagerie du visiteur avec la demande pré-remplie.
-    // Pour un envoi serveur, branchez ici un Cloudflare Worker ou un service de formulaire.
-    const mf = t('contact.mailFields')
-    const body = [
-      `${mf.nom} : ${f.nom}`,
-      `${mf.org} : ${f.organisation}`,
-      `${mf.mail} : ${f.email}`,
-      `${mf.tel} : ${f.tel}`,
-      `${mf.domaine} : ${f.domaine}`,
-      '',
-      f.message,
-    ].join('\n')
-    window.location.href =
-      `mailto:${CONTACT.email}?subject=${encodeURIComponent(`${t('contact.mailSubject')} ${f.domaine || mf.domaine}`)}` +
-      `&body=${encodeURIComponent(body)}`
-    setSent(true)
+    setStatus('sending')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...f, website: e.target.website.value }),
+      })
+      if (!res.ok) throw new Error()
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -37,12 +46,13 @@ export default function Contact() {
         tag={t('contact.head.tag')}
         title={t('contact.head.title')}
         lede={t('contact.head.lede')}
+        pathFr="/contact" pathEn="/en/contact"
       />
 
       <section className="band">
         <div className="shell form-grid">
           <Reveal variant="left" distance={70}>
-            {sent ? (
+            {status === 'sent' ? (
               <div className="form__ok">
                 {t('contact.successPrefix')} <strong>{CONTACT.email}</strong> {t('contact.successOr')} {CONTACT.phone}.
               </div>
@@ -74,6 +84,9 @@ export default function Contact() {
                   <label htmlFor="dom">{t('contact.labels.domaine')}</label>
                   <select id="dom" value={f.domaine} onChange={set('domaine')}>
                     <option value="">{t('contact.domaineDefault')}</option>
+                    {f.domaine.startsWith(t('formations.quoteSubject')) && (
+                      <option>{f.domaine}</option>
+                    )}
                     {DOMAINES.map((d) => <option key={d.slug}>{tf(d.short)}</option>)}
                     <option>{t('contact.domaineOther')}</option>
                   </select>
@@ -85,9 +98,18 @@ export default function Contact() {
                     placeholder={t('contact.placeholders.message')} />
                 </div>
 
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+                  style={{ position: 'absolute', left: '-9999px' }} />
+
+                {status === 'error' && (
+                  <p className="form__error" role="alert">
+                    {t('contact.errorPrefix')} <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> {t('contact.successOr')} {CONTACT.phone}.
+                  </p>
+                )}
+
                 <div className="form__submit">
-                  <button type="submit" className="btn btn--green">
-                    {t('contact.submit')} <span className="btn__arrow">→</span>
+                  <button type="submit" className="btn btn--green" disabled={status === 'sending'}>
+                    {status === 'sending' ? t('contact.sending') : t('contact.submit')} <span className="btn__arrow">→</span>
                   </button>
                   <span className="form__note">{t('contact.note')}</span>
                 </div>

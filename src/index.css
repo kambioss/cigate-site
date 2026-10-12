@@ -449,6 +449,11 @@ ul { list-style: none; }
   border: 1px solid rgba(46,125,58,.35); border-radius: 6px; padding: 22px 24px;
   color: var(--green-2); background: var(--green-lo); font-size: 15px; line-height: 1.7;
 }
+.form__error {
+  border: 1px solid rgba(180,40,40,.35); border-radius: 6px; padding: 14px 18px;
+  color: #8a1f1f; background: rgba(180,40,40,.06); font-size: 14px; line-height: 1.6;
+}
+.form__submit .btn:disabled { opacity: .6; cursor: wait; }
 
 .infocard { border: 1px solid var(--line); border-radius: 6px; padding: 26px; background: var(--bg-2); }
 .inforow { display: grid; gap: 3px; padding-block: 14px; border-bottom: 1px solid var(--line); }

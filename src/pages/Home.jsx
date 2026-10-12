@@ -5,6 +5,7 @@ import Reveal, { Stagger, StaggerItem, WordsUp, Parallax } from '../components/M
 import FeatureRow from '../components/FeatureRow'
 import Marquee from '../components/Marquee'
 import PageShell from '../components/PageShell'
+import SEO from '../components/SEO'
 import { Icons } from '../components/Icons'
 import { CLIENTS, CONTACT, DOMAINES, ENGAGEMENTS, IMG, METHODE } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
@@ -125,6 +126,10 @@ export default function Home() {
 
   return (
     <PageShell>
+      <SEO
+        title={t('home.seo.title')} description={t('home.seo.description')}
+        pathFr="/" pathEn="/en" suffix={false}
+      />
       <Hero />
       <Marquee />
 

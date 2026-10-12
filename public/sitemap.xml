@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://cigate.tg/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/en</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/qui-sommes-nous</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/qui-sommes-nous" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/qui-sommes-nous" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/en/qui-sommes-nous</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/qui-sommes-nous" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/qui-sommes-nous" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/notre-expertise</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/notre-expertise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/notre-expertise" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/en/notre-expertise</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/notre-expertise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/notre-expertise" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/formations</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/formations" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/formations" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/en/formations</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/formations" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/formations" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/actualites</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/actualites" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/actualites" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/en/actualites</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/actualites" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/actualites" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/contact" />
+  </url>
+  <url>
+    <loc>https://cigate.tg/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigate.tg/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigate.tg/en/contact" />
+  </url>
+</urlset>

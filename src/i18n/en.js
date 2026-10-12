@@ -10,6 +10,10 @@ export default {
   },
 
   home: {
+    seo: {
+      title: 'CIGATE — Geomatics, Planning, Topography and Environment | Lomé, Togo',
+      description: 'CIGATE, International Cabinet of Geomatics, Planning, Topography and Environment. Geomatics, remote sensing, topography, land studies, data analysis and digital solutions. Based in Lomé, Togo.',
+    },
     hero: {
       badge: 'Firm based in Lomé · Togo',
       tagline: 'CIGATE, the gateway to technological innovation',
@@ -92,7 +96,7 @@ export default {
       titleLine1: 'Territorial data',
       titleLine2: 'as a common good.',
       lede: 'West Africa is changing fast, and many planning decisions are still made without a reliable cartographic base. We want to help close that gap: producing precise, documented and reusable data, then passing on the mastery of it to those who manage the territory day to day.',
-      imgAlt: 'Satellite view of a river delta',
+      imgAlt: 'Aerial view of an urban territory',
     },
     engagements: {
       tag: 'Our commitments',
@@ -124,6 +128,22 @@ export default {
     },
   },
 
+  formations: {
+    head: {
+      tag: 'Training',
+      title: 'GIS skills your teams can put to work right away.',
+      lede: 'We train your teams on the geospatial tools they will actually use: GIS software, programming, field data collection and online mapping. Every course ends with a quote tailored to your group and your context.',
+    },
+    quoteCta: 'Request a quote',
+    quoteSubject: 'Training:',
+    quoteMessage: 'I would like to receive a quote for the "{{formation}}" training.',
+    callout: {
+      title: 'Need a tailor-made training programme?',
+      text: 'Number of participants, starting level, preferred duration: tell us about your context and we will propose a programme and a quote to match.',
+      ctaPrimary: 'Write to us',
+    },
+  },
+
   news: {
     head: {
       tag: 'News',
@@ -146,7 +166,8 @@ export default {
       title: "Let's talk about your project.",
       lede: 'For an assignment, a study, an equipment supply or a partnership, briefly describe your context, the location concerned and your timeline.',
     },
-    successPrefix: "Your request has been prepared in your mail app. If nothing opened automatically, write to us directly at",
+    successPrefix: "Thank you, your request has been sent. We will get back to you shortly. For anything urgent, write to us at",
+    errorPrefix: "The message could not be sent. Please try again or write to us directly at",
     successOr: 'or call',
     labels: {
       nom: 'Full name',
@@ -166,6 +187,7 @@ export default {
     domaineDefault: 'Select a field',
     domaineOther: 'Partnership or other request',
     submit: 'Send request',
+    sending: 'Sending…',
     note: 'Fast reply, within 48 business hours',
     infoTag: 'Get in touch',
     infoLabels: {
@@ -174,14 +196,6 @@ export default {
       tel: 'Phone',
       mail: 'Email',
       horaires: 'Hours',
-    },
-    mailSubject: 'Request via the website —',
-    mailFields: {
-      nom: 'Name',
-      org: 'Organisation',
-      mail: 'Email',
-      tel: 'Phone',
-      domaine: 'Field',
     },
   },
 

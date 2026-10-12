@@ -20,6 +20,7 @@ export default function NotreExpertise() {
         tag={t('expertise.head.tag')}
         title={t('expertise.head.title')}
         lede={t('expertise.head.lede')}
+        pathFr="/notre-expertise" pathEn="/en/notre-expertise"
       />
 
       {/* Sommaire dépliable */}

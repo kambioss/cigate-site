@@ -1,2 +1,11 @@
 ADMIN_PASSWORD=change-me
 ADMIN_SESSION_SECRET=change-me-too-a-long-random-string
+
+# Envoi des messages du formulaire de contact (SMTP, port 465 ou 587 — le 25 est bloqué)
+SMTP_HOST=mail.infomaniak.com
+SMTP_PORT=465
+SMTP_USER=contact@cigate-int.com
+SMTP_PASS=change-me
+# Facultatifs : expéditeur (par défaut SMTP_USER) et destinataire (par défaut contact@cigate-int.com)
+SMTP_FROM=contact@cigate-int.com
+CONTACT_TO=contact@cigate-int.com

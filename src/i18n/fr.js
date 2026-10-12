@@ -10,6 +10,10 @@ export default {
   },
 
   home: {
+    seo: {
+      title: 'CIGATE — Géomatique, Aménagement, Topographie et Environnement | Lomé, Togo',
+      description: "CIGATE, Cabinet International de Géomatique, Aménagement, Topographie et Environnement. Géomatique, télédétection, topographie, études foncières, analyse de données et solutions numériques. Basé à Lomé, Togo.",
+    },
     hero: {
       badge: 'Cabinet basé à Lomé · Togo',
       tagline: "CIGATE, la porte de l'innovation technologique",
@@ -92,7 +96,7 @@ export default {
       titleLine1: 'La donnée territoriale',
       titleLine2: 'comme bien commun.',
       lede: "L'Afrique de l'Ouest se transforme vite, et beaucoup de décisions d'aménagement se prennent encore sans base cartographique fiable. Nous voulons contribuer à combler cet écart : produire des données précises, documentées et réutilisables, puis en transmettre la maîtrise à ceux qui gèrent le territoire au quotidien.",
-      imgAlt: "Vue satellitaire d'un delta fluvial",
+      imgAlt: "Vue aérienne d'un territoire urbain",
     },
     engagements: {
       tag: 'Nos engagements',
@@ -124,6 +128,22 @@ export default {
     },
   },
 
+  formations: {
+    head: {
+      tag: 'Formations',
+      title: 'Des compétences SIG directement opérationnelles.',
+      lede: "Nous formons vos équipes aux outils géospatiaux qu'elles utiliseront réellement : logiciels SIG, programmation, collecte de terrain et cartographie en ligne. Chaque formation se conclut par un devis adapté à votre groupe et à votre contexte.",
+    },
+    quoteCta: 'Demander un devis',
+    quoteSubject: 'Formation :',
+    quoteMessage: 'Je souhaite recevoir un devis pour la formation « {{formation}} ».',
+    callout: {
+      title: 'Un besoin de formation sur mesure ?',
+      text: "Nombre de participants, niveau de départ, durée souhaitée : décrivez-nous votre contexte, nous vous proposons un programme et un devis adaptés.",
+      ctaPrimary: 'Nous écrire',
+    },
+  },
+
   news: {
     head: {
       tag: 'Actualités',
@@ -146,7 +166,8 @@ export default {
       title: 'Parlons de votre projet.',
       lede: "Pour une mission, une étude, une fourniture d'équipement ou un partenariat, décrivez-nous brièvement votre contexte, la localisation concernée et vos délais.",
     },
-    successPrefix: "Votre demande a été préparée dans votre messagerie. Si rien ne s'est ouvert automatiquement, écrivez-nous directement à",
+    successPrefix: "Merci, votre demande a bien été envoyée. Nous vous répondrons rapidement. Pour toute urgence, écrivez-nous à",
+    errorPrefix: "Le message n'a pas pu être envoyé. Réessayez ou écrivez-nous directement à",
     successOr: 'ou appelez le',
     labels: {
       nom: 'Nom et prénom',
@@ -166,6 +187,7 @@ export default {
     domaineDefault: 'Sélectionnez un domaine',
     domaineOther: 'Partenariat ou autre demande',
     submit: 'Envoyer la demande',
+    sending: 'Envoi en cours…',
     note: 'Réponse rapide, sous 48 h ouvrées',
     infoTag: 'Nous joindre',
     infoLabels: {
@@ -174,14 +196,6 @@ export default {
       tel: 'Téléphone',
       mail: 'Courriel',
       horaires: 'Horaires',
-    },
-    mailSubject: 'Demande via le site —',
-    mailFields: {
-      nom: 'Nom',
-      org: 'Organisation',
-      mail: 'Courriel',
-      tel: 'Téléphone',
-      domaine: 'Domaine',
     },
   },
 
