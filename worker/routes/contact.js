@@ -30,7 +30,11 @@ contactRoutes.post('/', async (c) => {
   const error = validate(f)
   if (error) return c.json({ error }, 400)
 
-  const env = c.env
+  // Les valeurs collées dans le dashboard Cloudflare arrivent parfois avec des espaces ou un retour à la ligne.
+  const env = Object.fromEntries(
+    ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS', 'SMTP_FROM', 'CONTACT_TO']
+      .map((key) => [key, String(c.env[key] ?? '').trim()]),
+  )
   if (!env.SMTP_HOST || !env.SMTP_USER || !env.SMTP_PASS) {
     return c.json({ error: "L'envoi de courriel n'est pas configuré." }, 503)
   }
