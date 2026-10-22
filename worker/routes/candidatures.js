@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import PostalMime from 'postal-mime'
 import { requireAuth } from './auth.js'
-import { DEFAULT_SUBJECT, DEFAULT_TEMPLATE, mailConfig, personalize, validateDraft } from '../lib/candidature-template.js'
+import { DEFAULT_SUBJECT, DEFAULT_TEMPLATE, mailConfig, matchesCandidateSubject, personalize, subjectTerms, validateDraft } from '../lib/candidature-template.js'
 
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/
 const find = (db, id) => db.prepare('SELECT * FROM candidatures WHERE id=?').bind(id).first()
@@ -32,8 +32,9 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
     const { results } = await c.env.DB.prepare('SELECT * FROM candidatures ORDER BY received_at DESC LIMIT 500').all()
     let configured = true
     let mailbox = ''
-    try { mailbox = mailConfig(c.env).email } catch { configured = false }
-    return c.json({ items: results, configured, mailbox, defaultSubject: DEFAULT_SUBJECT, defaultTemplate: DEFAULT_TEMPLATE })
+    let folder = ''
+    try { ({ email: mailbox, folder } = mailConfig(c.env)) } catch { configured = false }
+    return c.json({ items: results, configured, mailbox, folder, subjectTerms: folder.toUpperCase() === 'INBOX' ? subjectTerms(c.env) : [], defaultSubject: DEFAULT_SUBJECT, defaultTemplate: DEFAULT_TEMPLATE })
   })
 
   routes.post('/sync', async (c) => {
@@ -42,6 +43,11 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
       const config = mailConfig(c.env)
       mailbox = await openMailbox(c.env)
       const uids = await mailbox.recentUids()
+      const [{ results: existing }, { results: ignoredIds }] = await Promise.all([
+        c.env.DB.prepare('SELECT id FROM candidatures').all(),
+        c.env.DB.prepare('SELECT id FROM candidature_ignored').all(),
+      ])
+      const known = new Set([...existing, ...ignoredIds].map((row) => row.id))
       let imported = 0, ignored = 0, scanned = 0
       for (const uid of uids) {
         if (imported >= 30) break
@@ -49,7 +55,7 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
         const source = [config.email.toLowerCase(), config.folder, mailbox.uidvalidity, uid].join('\0')
         const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(source))
         const id = Array.from(new Uint8Array(hash), (byte) => byte.toString(16).padStart(2, '0')).join('')
-        if (await find(c.env.DB, id)) continue
+        if (known.has(id)) continue
         const mail = await parseMail(await mailbox.fetch(uid))
         const header = (key) => mail.headers.find((item) => item.key === key)?.value?.trim().toLowerCase()
         const address = mail.from?.address || ''
@@ -57,8 +63,11 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
           mail.headers.filter((item) => item.key === 'from').length !== 1 ||
           (header('auto-submitted') && header('auto-submitted') !== 'no') ||
           ['bulk', 'junk', 'list'].includes(header('precedence')) || header('list-id') ||
-          header('list-unsubscribe') || header('return-path') === '<>') {
+          header('list-unsubscribe') || header('return-path') === '<>' ||
+          !matchesCandidateSubject(mail.subject, config.folder, c.env)) {
           ignored++
+          await c.env.DB.prepare('INSERT OR IGNORE INTO candidature_ignored (id) VALUES (?)').bind(id).run()
+          known.add(id)
           continue
         }
         const row = { name: (mail.from?.name || '').replace(/[\r\n]/g, ' ').slice(0, 160), email: address }
@@ -71,6 +80,7 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
           (mail.messageId || '').slice(0, 998), DEFAULT_SUBJECT, personalize(DEFAULT_TEMPLATE, row),
         ).run()
         imported += result.meta.changes
+        known.add(id)
       }
       return c.json({ imported, ignored, scanned, remaining: uids.length - scanned })
     } catch (error) {

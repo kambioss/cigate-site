@@ -15,4 +15,6 @@ CANDIDATURE_EMAIL=recrutement@exemple.com
 # Facultatif si CANDIDATURE_EMAIL est identique à SMTP_USER : SMTP_PASS est réutilisé.
 CANDIDATURE_PASSWORD=change-me
 CANDIDATURE_FOLDER=Candidatures
+# Pour utiliser INBOX, seuls les courriels dont l'objet contient l'un des termes ci-dessous seront proposés.
+CANDIDATURE_SUBJECT_TERMS=candidature,postulation,application,recrutement,emploi,cv
 CANDIDATURE_ORGANISATION=CIGATE

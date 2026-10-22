@@ -173,6 +173,7 @@ export default function AdminCandidatures() {
       {error && <p className="admin-error" role="alert">{error}</p>}
       {notice && <p className="candidature-notice" role="status">{notice}</p>}
       {data && !data.configured && <p className="candidature-notice">La boîte mail des candidatures n’est pas encore connectée. Renseignez son adresse, son mot de passe et le dossier dédié dans la configuration du serveur.</p>}
+      {data?.configured && <p className="candidature-notice">Source : {data.mailbox} · {data.folder === 'INBOX' ? 'Boîte de réception' : `Dossier ${data.folder}`}. {data.subjectTerms?.length > 0 && <>Seuls les objets contenant {data.subjectTerms.join(', ')} sont proposés comme candidatures.</>} Aucun courriel n’est envoyé lors de la récupération.</p>}
       <div className="candidature-filters">
         <label className="field">Rechercher<input type="search" placeholder="Nom, adresse ou objet…" value={search} onChange={(e) => setSearch(e.target.value)} /></label>
         <label className="field">Statut<select value={filter} onChange={(e) => setFilter(e.target.value)}><option value="all">Toutes les candidatures</option>{Object.entries(LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>

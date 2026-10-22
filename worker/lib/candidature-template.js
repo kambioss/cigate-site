@@ -1,5 +1,6 @@
 export const DEFAULT_SUBJECT = 'Accusé de réception de votre candidature'
 export const DEFAULT_TEMPLATE = "Bonjour {{nom}},\n\nNous accusons réception de votre candidature et vous remercions de l'intérêt que vous portez à notre organisation.\n\nNous examinerons votre dossier et vous contacterons si votre profil correspond aux besoins du poste.\n\nCordialement,\nL'équipe CIGATE"
+export const DEFAULT_SUBJECT_TERMS = 'candidature,postulation,application,recrutement,emploi,cv'
 
 export function mailConfig(env) {
   const smtpUser = String(env.SMTP_USER || '').trim()
@@ -8,6 +9,20 @@ export function mailConfig(env) {
   const folder = String(env.CANDIDATURE_FOLDER || '').trim()
   if (!email || !password || !folder) throw new Error('La boîte des candidatures doit être configurée dans les paramètres du serveur.')
   return { email, password, folder }
+}
+
+export function subjectTerms(env) {
+  return String(env.CANDIDATURE_SUBJECT_TERMS || DEFAULT_SUBJECT_TERMS)
+    .split(',').map((term) => term.trim().toLocaleLowerCase('fr')).filter(Boolean)
+}
+
+export function matchesCandidateSubject(subject, folder, env) {
+  if (folder.toUpperCase() !== 'INBOX') return true
+  const normalized = String(subject || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr')
+  return subjectTerms(env).some((term) => {
+    const normalizedTerm = term.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    return normalizedTerm === 'cv' ? /\bcv\b/.test(normalized) : normalized.includes(normalizedTerm)
+  })
 }
 
 export function personalize(template, row) {

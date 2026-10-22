@@ -186,10 +186,13 @@ par défaut `contact@cigate-int.com`). Voir `.dev.vars.example`.
 ## Candidatures : lecture et envoi après validation
 
 La page privée **`/admin/candidatures`** est accessible depuis le menu d'administration.
-Elle récupère jusqu'à **30 nouvelles candidatures par clic** d'un dossier Infomaniak dédié,
+Elle récupère jusqu'à **30 nouvelles candidatures par clic** d'un dossier Infomaniak,
 des plus récentes aux plus anciennes, y compris les messages déjà lus. Répéter la récupération
-si le dossier contient plus de 30 candidatures. Utiliser un dossier ne contenant que des candidatures : le système
-ne classe pas automatiquement les messages. Les courriels restent dans leur état d'origine.
+si le dossier contient plus de 30 candidatures. Si les candidatures arrivent directement
+dans `INBOX`, renseigner `CANDIDATURE_FOLDER=INBOX`. Seuls les objets contenant l'un des
+termes `candidature`, `postulation`, `application`, `recrutement`, `emploi`, `cv` seront proposés.
+Ces termes sont ajustables via `CANDIDATURE_SUBJECT_TERMS` (liste séparée par des virgules).
+Les courriels restent dans leur état d'origine.
 
 Depuis cette page, vous pouvez consulter un message, télécharger son original `.eml`
 avec ses pièces jointes, corriger le nom du candidat et modifier votre réponse.
@@ -214,6 +217,7 @@ ajouter aussi `CANDIDATURE_PASSWORD` ; sinon `SMTP_PASS` est réutilisé. Puis :
 
 ```bash
 npm run db:candidatures:local
+npm run db:candidatures:ignored:local
 npm run dev
 ```
 
@@ -229,6 +233,7 @@ Activation en production, avec la même base D1 que le site :
 
 ```bash
 npm run db:candidatures:remote
+npm run db:candidatures:ignored:remote
 npx wrangler secret put CANDIDATURE_EMAIL
 npx wrangler secret put CANDIDATURE_PASSWORD # uniquement si la boîte est différente de SMTP_USER
 npx wrangler secret put CANDIDATURE_FOLDER

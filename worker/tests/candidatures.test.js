@@ -5,12 +5,13 @@ import { DatabaseSync } from 'node:sqlite'
 import { Hono } from 'hono'
 import { createCandidatureRoutes } from '../routes/candidatures.js'
 import { createSessionToken } from '../lib/session.js'
-import { DEFAULT_TEMPLATE, mailConfig, personalize } from '../lib/candidature-template.js'
+import { DEFAULT_TEMPLATE, mailConfig, matchesCandidateSubject, personalize } from '../lib/candidature-template.js'
 import { ImapClient, encodeFolder, quoteImap } from '../lib/imap-client.js'
 
 function database() {
   const sql = new DatabaseSync(':memory:')
   sql.exec(readFileSync(new URL('../../migrations/0002_candidatures.sql', import.meta.url), 'utf8'))
+  sql.exec(readFileSync(new URL('../../migrations/0003_candidatures_ignored.sql', import.meta.url), 'utf8'))
   function statement(query, values = []) {
     return {
       bind: (...next) => statement(query, next),
@@ -40,7 +41,7 @@ async function fixture(t, sendMail) {
   }, env)
   const rows = async () => (await (await call()).json()).items
   const selection = (items) => items.map(({ id, revision }) => ({ id, revision }))
-  return { call, rows, selection, sent, env }
+  return { call, rows, selection, sent, env, mailbox }
 }
 
 test('requires authentication and rejects a different origin', async (t) => {
@@ -133,6 +134,25 @@ test('the existing SMTP credentials are reused only for the same mailbox', () =>
   assert.deepEqual(mailConfig({ SMTP_USER: 'contact@example.com', SMTP_PASS: 'secret', CANDIDATURE_FOLDER: 'Candidatures' }),
     { email: 'contact@example.com', password: 'secret', folder: 'Candidatures' })
   assert.throws(() => mailConfig({ SMTP_USER: 'contact@example.com', SMTP_PASS: 'secret', CANDIDATURE_EMAIL: 'jobs@example.com', CANDIDATURE_FOLDER: 'Candidatures' }))
+})
+
+test('INBOX imports application subjects and skips ordinary contact messages', async (t) => {
+  assert.equal(matchesCandidateSubject('CV de Fatima', 'INBOX', {}), true)
+  assert.equal(matchesCandidateSubject('Demande de devis', 'INBOX', {}), false)
+  assert.equal(matchesCandidateSubject('Demande de devis', 'Candidatures', {}), true)
+  const f = await fixture(t)
+  f.env.CANDIDATURE_FOLDER = 'INBOX'
+  f.mailbox.recentUids = async () => ['3', '2', '1']
+  const fetchCandidate = f.mailbox.fetch
+  f.mailbox.fetch = async (uid) => uid === '3'
+    ? new TextEncoder().encode('From: Client <client@example.com>\r\nSubject: Demande de devis\r\n\r\nBonjour')
+    : fetchCandidate(uid)
+  const first = await f.call('/sync', {})
+  assert.equal(first.status, 200)
+  assert.deepEqual(((await first.json())), { imported: 2, ignored: 1, scanned: 3, remaining: 0 })
+  assert.equal((await f.rows()).length, 2)
+  const again = await f.call('/sync', {})
+  assert.equal((await again.json()).ignored, 0)
 })
 
 test('IMAP encodes accented folder names and rejects protocol injection', () => {

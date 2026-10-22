@@ -13,6 +13,8 @@
     "db:migrate:remote": "wrangler d1 execute cigate --remote --file=migrations/0001_news.sql",
     "db:candidatures:local": "wrangler d1 execute cigate --local --file=migrations/0002_candidatures.sql",
     "db:candidatures:remote": "wrangler d1 execute cigate --remote --file=migrations/0002_candidatures.sql",
+    "db:candidatures:ignored:local": "wrangler d1 execute cigate --local --file=migrations/0003_candidatures_ignored.sql",
+    "db:candidatures:ignored:remote": "wrangler d1 execute cigate --remote --file=migrations/0003_candidatures_ignored.sql",
     "test:candidatures": "node worker/tests/candidatures.test.js"
   },
   "dependencies": {
