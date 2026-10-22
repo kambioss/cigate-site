@@ -208,8 +208,9 @@ Un arrêt pendant un lot laisse les réservations « Envoi en cours / à vérifi
 les journaux du fournisseur ou contacter les destinataires avant tout renvoi manuel.
 Un courriel envoyé par SMTP n'est pas automatiquement copié dans le dossier « Envoyés ».
 
-Configuration locale : ajouter `CANDIDATURE_EMAIL`, `CANDIDATURE_PASSWORD`,
-`CANDIDATURE_FOLDER` dans `.dev.vars` (voir `.dev.vars.example`), puis :
+Configuration locale : ajouter `CANDIDATURE_EMAIL` et `CANDIDATURE_FOLDER` dans
+`.dev.vars` (voir `.dev.vars.example`). Si cette boîte est différente de `SMTP_USER`,
+ajouter aussi `CANDIDATURE_PASSWORD` ; sinon `SMTP_PASS` est réutilisé. Puis :
 
 ```bash
 npm run db:candidatures:local
@@ -229,7 +230,7 @@ Activation en production, avec la même base D1 que le site :
 ```bash
 npm run db:candidatures:remote
 npx wrangler secret put CANDIDATURE_EMAIL
-npx wrangler secret put CANDIDATURE_PASSWORD
+npx wrangler secret put CANDIDATURE_PASSWORD # uniquement si la boîte est différente de SMTP_USER
 npx wrangler secret put CANDIDATURE_FOLDER
 # Facultatif : nom affiché de l'expéditeur (CIGATE par défaut)
 npx wrangler secret put CANDIDATURE_ORGANISATION

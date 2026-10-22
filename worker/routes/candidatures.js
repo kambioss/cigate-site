@@ -30,7 +30,10 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
 
   routes.get('/', async (c) => {
     const { results } = await c.env.DB.prepare('SELECT * FROM candidatures ORDER BY received_at DESC LIMIT 500').all()
-    return c.json({ items: results, configured: Boolean(c.env.CANDIDATURE_EMAIL && c.env.CANDIDATURE_PASSWORD && c.env.CANDIDATURE_FOLDER), mailbox: c.env.CANDIDATURE_EMAIL || '', defaultSubject: DEFAULT_SUBJECT, defaultTemplate: DEFAULT_TEMPLATE })
+    let configured = true
+    let mailbox = ''
+    try { mailbox = mailConfig(c.env).email } catch { configured = false }
+    return c.json({ items: results, configured, mailbox, defaultSubject: DEFAULT_SUBJECT, defaultTemplate: DEFAULT_TEMPLATE })
   })
 
   routes.post('/sync', async (c) => {

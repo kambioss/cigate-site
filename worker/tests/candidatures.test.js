@@ -5,7 +5,7 @@ import { DatabaseSync } from 'node:sqlite'
 import { Hono } from 'hono'
 import { createCandidatureRoutes } from '../routes/candidatures.js'
 import { createSessionToken } from '../lib/session.js'
-import { DEFAULT_TEMPLATE, personalize } from '../lib/candidature-template.js'
+import { DEFAULT_TEMPLATE, mailConfig, personalize } from '../lib/candidature-template.js'
 import { ImapClient, encodeFolder, quoteImap } from '../lib/imap-client.js'
 
 function database() {
@@ -127,6 +127,12 @@ test('unknown template variables are rejected and a missing name uses a neutral 
   const f = await fixture(t)
   await f.call('/sync', {})
   assert.equal((await f.call('/drafts', { items: f.selection(await f.rows()), subject: 'Bonjour', text: '{{prenom}}' })).status, 400)
+})
+
+test('the existing SMTP credentials are reused only for the same mailbox', () => {
+  assert.deepEqual(mailConfig({ SMTP_USER: 'contact@example.com', SMTP_PASS: 'secret', CANDIDATURE_FOLDER: 'Candidatures' }),
+    { email: 'contact@example.com', password: 'secret', folder: 'Candidatures' })
+  assert.throws(() => mailConfig({ SMTP_USER: 'contact@example.com', SMTP_PASS: 'secret', CANDIDATURE_EMAIL: 'jobs@example.com', CANDIDATURE_FOLDER: 'Candidatures' }))
 })
 
 test('IMAP encodes accented folder names and rejects protocol injection', () => {

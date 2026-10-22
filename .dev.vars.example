@@ -12,6 +12,7 @@ CONTACT_TO=contact@cigate-int.com
 
 # Page privée /admin/candidatures : boîte et dossier réservés aux candidatures
 CANDIDATURE_EMAIL=recrutement@exemple.com
+# Facultatif si CANDIDATURE_EMAIL est identique à SMTP_USER : SMTP_PASS est réutilisé.
 CANDIDATURE_PASSWORD=change-me
 CANDIDATURE_FOLDER=Candidatures
 CANDIDATURE_ORGANISATION=CIGATE
