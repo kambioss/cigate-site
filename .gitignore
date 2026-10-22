@@ -5,3 +5,6 @@ dist
 .dev.vars
 .dev.vars.*
 !.dev.vars.example
+scripts/candidatures.env
+scripts/.candidatures.sqlite3*
+scripts/__pycache__/

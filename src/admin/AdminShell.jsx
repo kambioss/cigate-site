@@ -33,6 +33,9 @@ export default function AdminShell() {
           <NavLink to="/admin/media" className={({ isActive }) => (isActive ? 'is-active' : '')}>
             Médiathèque
           </NavLink>
+          <NavLink to="/admin/candidatures" className={({ isActive }) => (isActive ? 'is-active' : '')}>
+            Candidatures
+          </NavLink>
         </nav>
         <button className="btn btn--outline" onClick={logout}>Déconnexion</button>
       </header>

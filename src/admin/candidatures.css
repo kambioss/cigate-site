@@ -1,0 +1,44 @@
+.candidature-muted { color: var(--mute); font-size: 13px; margin-top: 8px; }
+.candidature-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.candidatures button:disabled { opacity: .5; cursor: not-allowed; }
+.candidature-notice { padding: 14px 18px; background: #edf5ee; border: 1px solid #c9dfcc; border-radius: 6px; margin-bottom: 18px; font-size: 14px; }
+.candidature-filters { display: grid; grid-template-columns: 1fr 240px; gap: 16px; margin: 24px 0 16px; }
+.candidature-selection { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; font-size: 13px; }
+.candidature-selection .btn { padding: 10px 13px; font-size: 12px; }
+.candidature-link { color: var(--navy); text-decoration: underline; font-size: 13px; }
+.candidature-layout { display: grid; grid-template-columns: minmax(230px, .8fr) minmax(0, 1.3fr); gap: 22px; align-items: start; }
+.candidature-list, .candidature-workspace { border: 1px solid var(--line); background: #fff; border-radius: 8px; overflow: hidden; }
+.candidature-workspace { padding: 24px; }
+.candidature-workspace h2 { font-family: var(--ff-display); color: var(--navy); font-size: 18px; margin-bottom: 10px; }
+.candidature-workspace > p { overflow-wrap: anywhere; }
+.candidature-row { display: flex; gap: 10px; padding: 14px; border-bottom: 1px solid var(--line); }
+.candidature-row.is-active { background: #f0f6f1; box-shadow: inset 3px 0 var(--green); }
+.candidature-row > input { flex-shrink: 0; width: 17px; height: 17px; margin-top: 4px; accent-color: #2e7d3a; }
+.candidature-row__open { text-align: left; display: grid; gap: 5px; width: 100%; min-width: 0; font-size: 13px; }
+.candidature-row__open > strong, .candidature-row__open > span { overflow-wrap: anywhere; }
+.candidature-row__open small { color: var(--mute); }
+.candidature-status { font-size: 11px; padding: 3px 8px; background: #eef1f4; color: var(--navy); border-radius: 4px; width: fit-content; }
+.candidature-status--sent { background: #e6f2e8; color: #276332; }
+.candidature-status--uncertain, .candidature-status--sending { background: #fff1d5; color: #75511c; }
+.candidature-empty { padding: 24px; color: var(--mute); font-size: 14px; }
+.candidature-empty p + p { margin-top: 12px; }
+.candidature-message { margin: 24px 0; padding-block: 16px; border-block: 1px solid var(--line); font-size: 13px; }
+.candidature-message summary, .candidature-names summary { cursor: pointer; font-weight: 600; color: var(--navy); }
+.candidature-message pre, .candidature-preview pre { font-family: inherit; font-size: 14px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; margin-block: 14px; }
+.candidature-message pre { max-height: 350px; overflow: auto; }
+.candidature-names { padding: 12px; background: var(--bg-2); border-radius: 5px; }
+.candidature-names .field { margin-top: 12px; font-size: 12px; overflow-wrap: anywhere; }
+.candidature-dialog { width: min(850px, calc(100% - 32px)); max-height: 90vh; border: 1px solid var(--line); border-radius: 10px; margin: auto; padding: 24px; color: var(--body); }
+.candidature-dialog::backdrop { background: rgba(13, 31, 45, .62); }
+.candidature-dialog__head h2 { font-size: 23px; color: var(--navy); margin-bottom: 10px; }
+.candidature-dialog__head p { font-size: 14px; color: var(--mute); }
+.candidature-dialog__messages { max-height: 55vh; overflow: auto; margin-block: 20px; }
+.candidature-preview { border: 1px solid var(--line); padding: 18px; border-radius: 6px; margin-bottom: 14px; overflow-wrap: anywhere; }
+.candidature-preview > p { font-size: 13px; margin-top: 8px; }
+@media (max-width: 800px) {
+  .candidature-layout, .candidature-filters { grid-template-columns: 1fr; }
+  .candidature-list { max-height: 400px; overflow: auto; }
+  .admin__bar { flex-wrap: wrap; gap: 16px; }
+  .admin__nav { flex-wrap: wrap; }
+  .candidature-workspace { padding: 18px; }
+}

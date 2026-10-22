@@ -10,11 +10,15 @@
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy",
     "db:migrate:local": "wrangler d1 execute cigate --local --file=migrations/0001_news.sql",
-    "db:migrate:remote": "wrangler d1 execute cigate --remote --file=migrations/0001_news.sql"
+    "db:migrate:remote": "wrangler d1 execute cigate --remote --file=migrations/0001_news.sql",
+    "db:candidatures:local": "wrangler d1 execute cigate --local --file=migrations/0002_candidatures.sql",
+    "db:candidatures:remote": "wrangler d1 execute cigate --remote --file=migrations/0002_candidatures.sql",
+    "test:candidatures": "node worker/tests/candidatures.test.js"
   },
   "dependencies": {
     "framer-motion": "^11.3.19",
     "hono": "^4.13.3",
+    "postal-mime": "^4.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.18.2",

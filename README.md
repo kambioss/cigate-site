@@ -183,6 +183,64 @@ Variables : `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, et en option
 `SMTP_FROM` (expéditeur, par défaut `SMTP_USER`) et `CONTACT_TO` (destinataire,
 par défaut `contact@cigate-int.com`). Voir `.dev.vars.example`.
 
+## Candidatures : lecture et envoi après validation
+
+La page privée **`/admin/candidatures`** est accessible depuis le menu d'administration.
+Elle récupère jusqu'à **30 nouvelles candidatures par clic** d'un dossier Infomaniak dédié,
+des plus récentes aux plus anciennes, y compris les messages déjà lus. Répéter la récupération
+si le dossier contient plus de 30 candidatures. Utiliser un dossier ne contenant que des candidatures : le système
+ne classe pas automatiquement les messages. Les courriels restent dans leur état d'origine.
+
+Depuis cette page, vous pouvez consulter un message, télécharger son original `.eml`
+avec ses pièces jointes, corriger le nom du candidat et modifier votre réponse.
+Pour un lot, cocher jusqu'à **20 personnes**, rédiger un modèle avec `{{nom}}` et/ou
+`{{email}}`, puis vérifier chaque réponse personnalisée. Les messages sont enregistrés
+comme brouillons et **envoyés uniquement après confirmation explicite** du lot.
+Chaque destinataire reçoit un courriel séparé. Si le nom est absent, la formule
+`Bonjour {{nom}},` devient `Bonjour,`. Le nom initial vient de l'expéditeur du courriel ;
+il peut être corrigé avant la préparation du lot.
+
+Les API sont protégées par la session administrateur. Les brouillons et l'historique
+vivent dans D1 ; le contenu du message et ses pièces jointes restent dans Infomaniak.
+Un verrou en base empêche un double envoi ou l'envoi d'un brouillon modifié après validation.
+Après un résultat SMTP incertain, le message est marqué « À vérifier » sans renvoi automatique.
+Un arrêt pendant un lot laisse les réservations « Envoi en cours / à vérifier » : vérifier
+les journaux du fournisseur ou contacter les destinataires avant tout renvoi manuel.
+Un courriel envoyé par SMTP n'est pas automatiquement copié dans le dossier « Envoyés ».
+
+Configuration locale : ajouter `CANDIDATURE_EMAIL`, `CANDIDATURE_PASSWORD`,
+`CANDIDATURE_FOLDER` dans `.dev.vars` (voir `.dev.vars.example`), puis :
+
+```bash
+npm run db:candidatures:local
+npm run dev
+```
+
+Le mot de passe est celui de **la boîte mail**. IMAP utilise TLS sur le port 993 et
+SMTP TLS sur le port 465, conformément aux
+[paramètres Infomaniak](https://www.infomaniak.com/fr/support/faq/468/comprendre-les-ports-et-protocoles-de-messagerie).
+Les connexions IMAP utilisent les
+[sockets du Worker Cloudflare](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/).
+Les originaux sont limités à 10 Mo pour la consultation ou le téléchargement depuis cette page.
+Pour les messages plus volumineux, utiliser Infomaniak Mail.
+
+Activation en production, avec la même base D1 que le site :
+
+```bash
+npm run db:candidatures:remote
+npx wrangler secret put CANDIDATURE_EMAIL
+npx wrangler secret put CANDIDATURE_PASSWORD
+npx wrangler secret put CANDIDATURE_FOLDER
+# Facultatif : nom affiché de l'expéditeur (CIGATE par défaut)
+npx wrangler secret put CANDIDATURE_ORGANISATION
+npm run deploy
+```
+
+Tests locaux, sans contacter une boîte ni envoyer de courriel : `npm run test:candidatures`
+(Node 22.13 ou version ultérieure). Le script Python reste une interface alternative :
+sa base SQLite et l'historique D1 du site sont distincts ; utiliser une seule interface
+d'envoi pour une même boîte.
+
 ## À compléter plus tard
 
 Une page **Réalisations** (même structure que `NotreExpertise.jsx`) et une section

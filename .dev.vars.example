@@ -9,3 +9,9 @@ SMTP_PASS=change-me
 # Facultatifs : expéditeur (par défaut SMTP_USER) et destinataire (par défaut contact@cigate-int.com)
 SMTP_FROM=contact@cigate-int.com
 CONTACT_TO=contact@cigate-int.com
+
+# Page privée /admin/candidatures : boîte et dossier réservés aux candidatures
+CANDIDATURE_EMAIL=recrutement@exemple.com
+CANDIDATURE_PASSWORD=change-me
+CANDIDATURE_FOLDER=Candidatures
+CANDIDATURE_ORGANISATION=CIGATE
