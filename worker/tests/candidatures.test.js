@@ -58,6 +58,22 @@ test('import is idempotent and never sends mail', async (t) => {
   assert.equal(f.sent.length, 0)
 })
 
+test('a recipient can be added manually as a personalized unsent draft', async (t) => {
+  const f = await fixture(t)
+  const response = await f.call('/manual', { name: 'Aïcha Ben Salah', email: 'AICHA@example.com' })
+  assert.equal(response.status, 201)
+  const { item } = await response.json()
+  assert.equal(item.name, 'Aïcha Ben Salah')
+  assert.equal(item.email, 'aicha@example.com')
+  assert.equal(item.status, 'draft')
+  assert.match(item.response_text, /^Bonjour Aïcha Ben Salah,/)
+  assert.equal(f.sent.length, 0)
+  assert.equal((await f.call('/manual', { name: 'Doublon', email: 'aicha@example.com' })).status, 409)
+  assert.equal((await f.call('/manual', { name: '', email: 'invalide' })).status, 400)
+  const message = await f.call(`/${item.id}/message`)
+  assert.match((await message.json()).text, /ajouté manuellement/)
+})
+
 test('message view shows the mail body and downloads the original attachment', async (t) => {
   const f = await fixture(t)
   await f.call('/sync', {})

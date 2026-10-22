@@ -55,6 +55,7 @@ export default function AdminCandidatures() {
   const [message, setMessage] = useState(null)
   const [messageError, setMessageError] = useState('')
   const [batch, setBatch] = useState(null)
+  const [manual, setManual] = useState(null)
   const [review, setReview] = useState(null)
   const items = data?.items || []
   const active = items.find((row) => row.id === activeId)
@@ -83,6 +84,7 @@ export default function AdminCandidatures() {
     setActiveId(row.id)
     setEditor({ name: row.name, subject: row.response_subject, text: row.response_text, revision: row.revision })
     setBatch(null)
+    setManual(null)
     setError('')
   }
 
@@ -109,6 +111,7 @@ export default function AdminCandidatures() {
       setActiveId(null)
       setEditor(null)
       setBatch(null)
+      setManual(null)
     } catch (e) { setError(e.message) } finally { setBusy('') }
   }
 
@@ -117,7 +120,22 @@ export default function AdminCandidatures() {
     setBatch({ rows, names: Object.fromEntries(rows.map((row) => [row.id, row.name])), subject: data.defaultSubject, text: data.defaultTemplate })
     setActiveId(null)
     setEditor(null)
+    setManual(null)
     setError('')
+  }
+
+  async function addManual(event) {
+    event.preventDefault()
+    setBusy('manual')
+    setError('')
+    try {
+      const result = await request('/manual', manual)
+      const next = await load()
+      const row = next.items.find((item) => item.id === result.item.id) || result.item
+      setManual(null)
+      setNotice('Le destinataire a été ajouté comme brouillon. Aucun email n’a été envoyé.')
+      open(row)
+    } catch (e) { setError(e.message) } finally { setBusy('') }
   }
 
   async function prepare(event) {
@@ -164,6 +182,7 @@ export default function AdminCandidatures() {
       <div className="admin__head">
         <div><h1 className="display t-lg">Candidatures</h1><p className="candidature-muted">{draftCount} à valider · Chaque envoi nécessite votre accord.</p></div>
         <div className="candidature-actions">
+          <button className="btn btn--outline" onClick={() => { setManual({ name: '', email: '' }); setActiveId(null); setEditor(null); setBatch(null); setError('') }} disabled={Boolean(busy)}>Ajouter un destinataire</button>
           <button className="btn btn--outline" onClick={() => refresh()} disabled={Boolean(busy)}>Actualiser</button>
           <button className="btn btn--green" onClick={() => refresh(true)} disabled={Boolean(busy) || !data?.configured}>
             {busy === 'sync' ? 'Récupération…' : 'Récupérer depuis Infomaniak'}
@@ -200,7 +219,17 @@ export default function AdminCandidatures() {
           {items.length === 500 && <p className="candidature-muted">Affichage des 500 candidatures les plus récentes.</p>}
         </section>
         <section className="candidature-workspace" aria-label="Préparation des réponses">
-          {!active && !batch && <div className="candidature-empty"><h2>Une réponse à la fois, ou par lot</h2><p>Ouvrez une candidature pour lire le message et rédiger une réponse. Cochez plusieurs personnes pour préparer un modèle personnalisé.</p><p>Les noms et les textes seront affichés avant votre confirmation.</p></div>}
+          {!active && !batch && !manual && <div className="candidature-empty"><h2>Une réponse à la fois, ou par lot</h2><p>Ouvrez une candidature pour lire le message et rédiger une réponse. Cochez plusieurs personnes pour préparer un modèle personnalisé.</p><p>Les noms et les textes seront affichés avant votre confirmation.</p></div>}
+          {manual && <form className="form" onSubmit={addManual}>
+            <h2>Ajouter un destinataire</h2>
+            <p className="candidature-muted">Cette personne sera ajoutée à la liste avec une réponse en brouillon. Aucun email ne sera envoyé à cette étape.</p>
+            <label className="field">Nom du candidat<input autoFocus maxLength={160} value={manual.name} onChange={(e) => setManual((old) => ({ ...old, name: e.target.value }))} /></label>
+            <label className="field">Adresse email<input type="email" maxLength={254} required value={manual.email} onChange={(e) => setManual((old) => ({ ...old, email: e.target.value }))} /></label>
+            <div className="candidature-actions">
+              <button className="btn btn--green" disabled={Boolean(busy) || !data?.configured} type="submit">{busy === 'manual' ? 'Ajout…' : 'Créer le brouillon'}</button>
+              <button className="btn btn--outline" disabled={Boolean(busy)} type="button" onClick={() => setManual(null)}>Annuler</button>
+            </div>
+          </form>}
           {active && <>
             <h2>{active.name || 'Candidature sans nom'}</h2><p>{active.email}</p><p className="candidature-muted">{active.subject}</p>
             <details className="candidature-message" open>

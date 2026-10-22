@@ -1,5 +1,5 @@
-export const DEFAULT_SUBJECT = 'Accusé de réception de votre candidature'
-export const DEFAULT_TEMPLATE = "Bonjour {{nom}},\n\nNous accusons réception de votre candidature et vous remercions de l'intérêt que vous portez à notre organisation.\n\nNous examinerons votre dossier et vous contacterons si votre profil correspond aux besoins du poste.\n\nCordialement,\nL'équipe CIGATE"
+export const DEFAULT_SUBJECT = 'Suite à votre candidature – Consultant/Formateur indépendant SIG'
+export const DEFAULT_TEMPLATE = "Bonjour {{nom}},\n\nNous avons pris connaissance de votre candidature au poste de Consultant/Formateur indépendant en systèmes d’information géographique (SIG).\n\nAprès examen, nous sommes au regret de vous informer que, malgré l’intérêt de votre profil, votre candidature n’a pas été retenue.\n\nNous conserverons néanmoins votre candidature dans notre base afin de pouvoir vous recontacter si une future possibilité de collaboration correspondant à votre profil se présente.\n\nNous vous remercions pour l’intérêt porté à CIGATE et vous prions de recevoir nos salutations cordiales.\n\nL’équipe CIGATE"
 export const DEFAULT_SUBJECT_TERMS = 'candidature,postulation,application,recrutement,emploi,cv'
 
 export function mailConfig(env) {

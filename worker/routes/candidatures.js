@@ -37,6 +37,27 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
     return c.json({ items: results, configured, mailbox, folder, subjectTerms: folder.toUpperCase() === 'INBOX' ? subjectTerms(c.env) : [], defaultSubject: DEFAULT_SUBJECT, defaultTemplate: DEFAULT_TEMPLATE })
   })
 
+  routes.post('/manual', async (c) => {
+    const body = await c.req.json().catch(() => ({}))
+    const name = typeof body.name === 'string' ? body.name.trim() : ''
+    const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
+    if (name.length > 160 || /[\r\n]/.test(name)) return c.json({ error: 'Nom invalide.' }, 400)
+    if (email.length > 254 || !EMAIL.test(email)) return c.json({ error: 'Adresse email invalide.' }, 400)
+    let config
+    try { config = mailConfig(c.env) } catch (error) { return c.json({ error: error.message }, 503) }
+    const existing = await c.env.DB.prepare("SELECT id FROM candidatures WHERE lower(email)=? AND status='draft' LIMIT 1").bind(email).first()
+    if (existing) return c.json({ error: 'Cette adresse possède déjà un brouillon à valider.' }, 409)
+    const now = new Date().toISOString()
+    const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`manual\0${email}\0${crypto.randomUUID()}`))
+    const id = Array.from(new Uint8Array(hash), (byte) => byte.toString(16).padStart(2, '0')).join('')
+    const row = { name, email }
+    await c.env.DB.prepare(`INSERT INTO candidatures
+      (id, mailbox, folder, uidvalidity, uid, name, email, subject, received_at, message_id, response_subject, response_text)
+      VALUES (?, ?, '__manual__', 'manual', ?, ?, ?, 'Destinataire ajouté manuellement', ?, '', ?, ?)`)
+      .bind(id, config.email.toLowerCase(), id, name, email, now, DEFAULT_SUBJECT, personalize(DEFAULT_TEMPLATE, row)).run()
+    return c.json({ item: await find(c.env.DB, id) }, 201)
+  })
+
   routes.post('/sync', async (c) => {
     let mailbox
     try {
@@ -91,6 +112,7 @@ export function createCandidatureRoutes({ openMailbox, sendMail }) {
   routes.get('/:id/message', async (c) => {
     const row = await find(c.env.DB, c.req.param('id'))
     if (!row) return c.json({ error: 'Candidature introuvable.' }, 404)
+    if (row.folder === '__manual__') return c.json({ text: 'Ce destinataire a été ajouté manuellement. Aucun courriel de candidature n’est associé.', attachments: [] })
     let mailbox
     try {
       const config = mailConfig(c.env)
